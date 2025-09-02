@@ -49,15 +49,15 @@ const Dashboard = ({ onMenuClick }) => {
   }, []);
 
   const getTodayAppointments = () => {
-    return appointments.filter(apt => 
-      isToday(parseISO(apt.date))
+return appointments.filter(apt => 
+      isToday(parseISO(apt.date_c || apt.date))
     );
   };
 
-  const getUpcomingAppointments = () => {
+const getUpcomingAppointments = () => {
     return appointments
       .filter(apt => {
-        const aptDate = parseISO(apt.date);
+        const aptDate = parseISO(apt.date_c || apt.date);
         const today = new Date();
         const sevenDaysFromNow = addDays(today, 7);
         return aptDate >= today && aptDate <= sevenDaysFromNow;
@@ -65,8 +65,9 @@ const Dashboard = ({ onMenuClick }) => {
       .sort((a, b) => new Date(a.date) - new Date(b.date));
   };
 
-  const getRecentPatients = () => {
+const getRecentPatients = () => {
     return patients
+      .sort((a, b) => new Date(b.registration_date_c || b.registrationDate) - new Date(a.registration_date_c || a.registrationDate))
       .sort((a, b) => new Date(b.registrationDate) - new Date(a.registrationDate))
       .slice(0, 5);
   };
@@ -81,11 +82,11 @@ const Dashboard = ({ onMenuClick }) => {
     return colors[status] || "default";
   };
 
-  const getAppointmentStats = () => {
+const getAppointmentStats = () => {
     const today = getTodayAppointments();
-    const confirmed = appointments.filter(apt => apt.status === "confirmed").length;
-    const pending = appointments.filter(apt => apt.status === "pending").length;
-    const completed = appointments.filter(apt => apt.status === "completed").length;
+    const confirmed = appointments.filter(apt => (apt.status_c || apt.status) === "confirmed").length;
+    const pending = appointments.filter(apt => (apt.status_c || apt.status) === "pending").length;
+    const completed = appointments.filter(apt => (apt.status_c || apt.status) === "completed").length;
 
     return { today: today.length, confirmed, pending, completed };
   };
@@ -167,8 +168,8 @@ const Dashboard = ({ onMenuClick }) => {
             <CardContent>
               {todayAppointments.length > 0 ? (
                 <div className="space-y-4 max-h-96 overflow-y-auto">
-                  {todayAppointments
-                    .sort((a, b) => a.timeSlot.localeCompare(b.timeSlot))
+{todayAppointments
+                    .sort((a, b) => (a.time_slot_c || a.timeSlot).localeCompare(b.time_slot_c || b.timeSlot))
                     .map((apt) => {
                       const patient = patients.find(p => p.Id === parseInt(apt.patientId));
                       const doctor = doctors.find(d => d.Id === parseInt(apt.doctorId));
@@ -184,10 +185,10 @@ const Dashboard = ({ onMenuClick }) => {
                             </div>
                             <div>
                               <div className="font-semibold text-gray-900">
-                                {apt.timeSlot} - {patient ? `${patient.firstName} ${patient.lastName}` : "Unknown Patient"}
+{apt.time_slot_c || apt.timeSlot} - {patient ? `${patient.first_name_c} ${patient.last_name_c}` : "Unknown Patient"}
                               </div>
                               <div className="text-sm text-gray-600">
-                                Dr. {doctor?.name || "Unknown"} • {apt.type}
+                                Dr. {doctor?.name_c || doctor?.name || "Unknown"} • {apt.type_c || apt.type}
                               </div>
                               {apt.notes && (
                                 <div className="text-xs text-gray-500 mt-1">{apt.notes}</div>
@@ -195,8 +196,8 @@ const Dashboard = ({ onMenuClick }) => {
                             </div>
                           </div>
                           <div className="flex items-center space-x-3">
-                            <Badge variant={getStatusColor(apt.status)}>
-                              {apt.status}
+<Badge variant={getStatusColor(apt.status_c || apt.status)}>
+                              {apt.status_c || apt.status}
                             </Badge>
                             <Button
                               variant="ghost"
@@ -284,9 +285,9 @@ const Dashboard = ({ onMenuClick }) => {
                         onClick={() => navigate(`/patients/${patient.Id}`)}
                         className="flex items-center space-x-3 p-3 rounded-lg hover:bg-gradient-to-r hover:from-surface hover:to-gray-100 transition-all duration-200 cursor-pointer"
                       >
-                        <div className="w-8 h-8 bg-gradient-to-r from-secondary to-secondary-700 rounded-full flex items-center justify-center shadow-sm">
+<div className="w-8 h-8 bg-gradient-to-r from-secondary to-secondary-700 rounded-full flex items-center justify-center shadow-sm">
                           <span className="text-white font-semibold text-xs">
-                            {patient.firstName.charAt(0)}{patient.lastName.charAt(0)}
+                            {patient.first_name_c?.charAt(0) || ""}{patient.last_name_c?.charAt(0) || ""}
                           </span>
                         </div>
                         <div className="flex-1">
@@ -326,10 +327,10 @@ const Dashboard = ({ onMenuClick }) => {
           <CardContent>
             {upcomingAppointments.length > 0 ? (
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                {upcomingAppointments.slice(0, 6).map((apt) => {
+{upcomingAppointments.slice(0, 6).map((apt) => {
                   const patient = patients.find(p => p.Id === parseInt(apt.patientId));
                   const doctor = doctors.find(d => d.Id === parseInt(apt.doctorId));
-                  const aptDate = parseISO(apt.date);
+                  const aptDate = parseISO(apt.date_c || apt.date);
                   
                   return (
                     <div
@@ -344,24 +345,24 @@ const Dashboard = ({ onMenuClick }) => {
                            format(aptDate, "MMM dd")}
                         </div>
                         <Badge variant={getStatusColor(apt.status)} className="text-xs">
-                          {apt.status}
+{apt.status_c || apt.status}
                         </Badge>
                       </div>
                       <div className="space-y-2">
                         <div className="font-medium text-gray-900">
-                          {patient ? `${patient.firstName} ${patient.lastName}` : "Unknown Patient"}
+                          {patient ? `${patient.first_name_c} ${patient.last_name_c}` : "Unknown Patient"}
                         </div>
                         <div className="text-sm text-gray-600">
                           <div className="flex items-center">
                             <ApperIcon name="Clock" className="w-3 h-3 mr-1" />
-                            {apt.timeSlot}
+                            {apt.time_slot_c || apt.timeSlot}
                           </div>
                           <div className="flex items-center mt-1">
                             <ApperIcon name="UserCheck" className="w-3 h-3 mr-1" />
-                            Dr. {doctor?.name || "Unknown"}
+                            Dr. {doctor?.name_c || doctor?.name || "Unknown"}
                           </div>
                         </div>
-                        <div className="text-xs text-gray-500">{apt.type}</div>
+                        <div className="text-xs text-gray-500">{apt.type_c || apt.type}</div>
                       </div>
                     </div>
                   );

@@ -62,7 +62,7 @@ const Appointments = ({ onMenuClick }) => {
   }, []);
 
   useEffect(() => {
-    if (id && appointments.length > 0) {
+if (id && appointments.length > 0) {
       const appointment = appointments.find(apt => apt.Id === parseInt(id));
       if (appointment) {
         setSelectedAppointment(appointment);
@@ -158,12 +158,12 @@ const Appointments = ({ onMenuClick }) => {
     return colors[status] || "default";
   };
 
-  const getAppointmentStats = () => {
+const getAppointmentStats = () => {
     const today = new Date();
     today.setHours(0, 0, 0, 0);
     
     const todayCount = appointments.filter(apt => {
-      const aptDate = new Date(apt.date);
+      const aptDate = new Date(apt.date_c || apt.date);
       aptDate.setHours(0, 0, 0, 0);
       return aptDate.getTime() === today.getTime();
     }).length;
@@ -404,17 +404,17 @@ const Appointments = ({ onMenuClick }) => {
                   </div>
                   <div>
                     <h3 className="text-2xl font-bold text-gray-900">
-                      {selectedAppointment.type}
+{selectedAppointment.type_c || selectedAppointment.type}
                     </h3>
                     <p className="text-lg text-gray-600">
-                      {format(parseISO(selectedAppointment.date), "EEEE, MMMM dd, yyyy")} at {selectedAppointment.timeSlot}
+                      {format(parseISO(selectedAppointment.date_c || selectedAppointment.date), "EEEE, MMMM dd, yyyy")} at {selectedAppointment.time_slot_c || selectedAppointment.timeSlot}
                     </p>
                     <div className="flex items-center space-x-2 mt-2">
-                      <Badge variant={getStatusColor(selectedAppointment.status)} className="text-sm">
-                        {selectedAppointment.status}
+                      <Badge variant={getStatusColor(selectedAppointment.status_c || selectedAppointment.status)} className="text-sm">
+                        {selectedAppointment.status_c || selectedAppointment.status}
                       </Badge>
                       <Badge variant="info" className="text-sm">
-                        {selectedAppointment.duration} min
+                        {selectedAppointment.duration_c || selectedAppointment.duration} min
                       </Badge>
                     </div>
                   </div>
@@ -452,24 +452,24 @@ const Appointments = ({ onMenuClick }) => {
                   </CardHeader>
                   <CardContent className="space-y-3">
                     {(() => {
-                      const patient = patients.find(p => p.Id === parseInt(selectedAppointment.patientId));
+const patient = patients.find(p => p.Id === parseInt(selectedAppointment.patientId));
                       return patient ? (
                         <>
                           <div>
                             <label className="text-xs font-medium text-gray-500 uppercase tracking-wide">Name</label>
                             <p className="text-sm font-medium text-gray-900">
-                              {patient.firstName} {patient.lastName}
+                              {patient.first_name_c} {patient.last_name_c}
                             </p>
                           </div>
                           <div>
                             <label className="text-xs font-medium text-gray-500 uppercase tracking-wide">Contact</label>
-                            <p className="text-sm font-medium text-gray-900">{patient.phone}</p>
-                            <p className="text-sm text-gray-600">{patient.email}</p>
+                            <p className="text-sm font-medium text-gray-900">{patient.phone_c}</p>
+                            <p className="text-sm text-gray-600">{patient.email_c}</p>
                           </div>
                           <div>
                             <label className="text-xs font-medium text-gray-500 uppercase tracking-wide">Age & Blood Type</label>
                             <p className="text-sm font-medium text-gray-900">
-                              {new Date().getFullYear() - new Date(patient.dateOfBirth).getFullYear()} years • {patient.bloodType}
+                              {patient.date_of_birth_c ? new Date().getFullYear() - new Date(patient.date_of_birth_c).getFullYear() : 0} years • {patient.blood_type_c}
                             </p>
                           </div>
                         </>
@@ -490,21 +490,21 @@ const Appointments = ({ onMenuClick }) => {
                   </CardHeader>
                   <CardContent className="space-y-3">
                     {(() => {
-                      const doctor = doctors.find(d => d.Id === parseInt(selectedAppointment.doctorId));
+const doctor = doctors.find(d => d.Id === parseInt(selectedAppointment.doctorId));
                       return doctor ? (
                         <>
                           <div>
                             <label className="text-xs font-medium text-gray-500 uppercase tracking-wide">Doctor</label>
-                            <p className="text-sm font-medium text-gray-900">Dr. {doctor.name}</p>
+                            <p className="text-sm font-medium text-gray-900">Dr. {doctor.name_c || doctor.name}</p>
                           </div>
                           <div>
                             <label className="text-xs font-medium text-gray-500 uppercase tracking-wide">Specialization</label>
-                            <p className="text-sm font-medium text-gray-900">{doctor.specialization}</p>
+                            <p className="text-sm font-medium text-gray-900">{doctor.specialization_c || doctor.specialization}</p>
                           </div>
                           <div>
                             <label className="text-xs font-medium text-gray-500 uppercase tracking-wide">Contact</label>
-                            <p className="text-sm font-medium text-gray-900">{doctor.phone}</p>
-                            <p className="text-sm text-gray-600">{doctor.email}</p>
+                            <p className="text-sm font-medium text-gray-900">{doctor.phone_c || doctor.phone}</p>
+                            <p className="text-sm text-gray-600">{doctor.email_c || doctor.email}</p>
                           </div>
                         </>
                       ) : (
@@ -516,8 +516,14 @@ const Appointments = ({ onMenuClick }) => {
               </div>
 
               {/* Additional Notes */}
-              {selectedAppointment.notes && (
+{(selectedAppointment.notes_c || selectedAppointment.notes) && (
                 <Card>
+                  <CardHeader>
+                    <CardTitle className="text-base">Notes</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <p className="text-sm text-gray-700">{selectedAppointment.notes_c || selectedAppointment.notes}</p>
+                  </CardContent>
                   <CardHeader>
                     <CardTitle className="flex items-center text-base">
                       <ApperIcon name="FileText" className="w-4 h-4 mr-2 text-warning" />

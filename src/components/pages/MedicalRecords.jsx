@@ -1,18 +1,20 @@
-import React, { useState, useEffect } from "react";
-import Header from "@/components/organisms/Header";
-import Button from "@/components/atoms/Button";
+import React, { useEffect, useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/atoms/Card";
-import Badge from "@/components/atoms/Badge";
-import ApperIcon from "@/components/ApperIcon";
-import Loading from "@/components/ui/Loading";
-import Error from "@/components/ui/Error";
-import Empty from "@/components/ui/Empty";
 import { MedicalRecordService } from "@/services/api/MedicalRecordService";
 import { PatientService } from "@/services/api/PatientService";
 import { DoctorService } from "@/services/api/DoctorService";
 import { toast } from "react-toastify";
 import { format, parseISO } from "date-fns";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
+import ApperIcon from "@/components/ApperIcon";
+import Header from "@/components/organisms/Header";
+import Error from "@/components/ui/Error";
+import Empty from "@/components/ui/Empty";
+import Loading from "@/components/ui/Loading";
+import Doctors from "@/components/pages/Doctors";
+import Patients from "@/components/pages/Patients";
+import Badge from "@/components/atoms/Badge";
+import Button from "@/components/atoms/Button";
 
 const MedicalRecords = ({ onMenuClick }) => {
   const navigate = useNavigate();
@@ -69,8 +71,7 @@ const MedicalRecords = ({ onMenuClick }) => {
     if (query.trim()) {
       filtered = filtered.filter(record => {
         const patient = patients.find(p => p.Id === parseInt(record.patientId));
-        const doctor = doctors.find(d => d.Id === parseInt(record.doctorId));
-        
+const doctor = doctors.find(d => d.Id === parseInt(record.doctorId));
         return (
           record.diagnosis.toLowerCase().includes(query.toLowerCase()) ||
           record.notes.toLowerCase().includes(query.toLowerCase()) ||
@@ -229,8 +230,8 @@ const MedicalRecords = ({ onMenuClick }) => {
                 >
                   <option value="">All Patients</option>
                   {patients.map((patient) => (
-                    <option key={patient.Id} value={patient.Id}>
-                      {patient.firstName} {patient.lastName}
+<option key={patient.Id} value={patient.Id}>
+                      {patient.first_name_c} {patient.last_name_c}
                     </option>
                   ))}
                 </select>
@@ -245,8 +246,8 @@ const MedicalRecords = ({ onMenuClick }) => {
                 >
                   <option value="">All Doctors</option>
                   {doctors.map((doctor) => (
-                    <option key={doctor.Id} value={doctor.Id}>
-                      Dr. {doctor.name}
+<option key={doctor.Id} value={doctor.Id}>
+                      Dr. {doctor.name_c || doctor.name}
                     </option>
                   ))}
                 </select>
@@ -325,20 +326,20 @@ const MedicalRecords = ({ onMenuClick }) => {
                             <div className="w-12 h-12 bg-gradient-to-r from-primary to-primary-700 rounded-full flex items-center justify-center shadow-lg">
                               <ApperIcon name="FileText" className="w-6 h-6 text-white" />
                             </div>
-                            <div>
+<div>
                               <h3 className="text-lg font-semibold text-gray-900">
-                                {patient ? `${patient.firstName} ${patient.lastName}` : "Unknown Patient"}
+                                {patient ? `${patient.first_name_c} ${patient.last_name_c}` : "Unknown Patient"}
                               </h3>
                               <p className="text-sm text-gray-600">
-                                Visit Date: {format(parseISO(record.visitDate), "MMMM dd, yyyy")}
+                                Visit Date: {format(parseISO(record.visit_date_c || record.visitDate), "MMMM dd, yyyy")}
                               </p>
                               <p className="text-sm text-gray-600">
-                                Doctor: Dr. {doctor?.name || "Unknown"}
+                                Doctor: Dr. {doctor?.name_c || doctor?.name || "Unknown"}
                               </p>
                             </div>
                           </div>
-                          <Badge variant={getDiagnosisColor(record.diagnosis)}>
-                            {record.diagnosis.slice(0, 30)}{record.diagnosis.length > 30 ? "..." : ""}
+<Badge variant={getDiagnosisColor(record.diagnosis_c || record.diagnosis)}>
+                            {(record.diagnosis_c || record.diagnosis).slice(0, 30)}{(record.diagnosis_c || record.diagnosis).length > 30 ? "..." : ""}
                           </Badge>
                         </div>
 
@@ -349,7 +350,7 @@ const MedicalRecords = ({ onMenuClick }) => {
                               <ApperIcon name="Activity" className="w-4 h-4 mr-2 text-secondary" />
                               Diagnosis
                             </h4>
-                            <p className="text-sm text-gray-700">{record.diagnosis}</p>
+<p className="text-sm text-gray-700">{record.diagnosis_c || record.diagnosis}</p>
                           </div>
 
                           {/* Vital Signs */}
@@ -359,29 +360,29 @@ const MedicalRecords = ({ onMenuClick }) => {
                                 <ApperIcon name="Heart" className="w-4 h-4 mr-2 text-error" />
                                 Vital Signs
                               </h4>
-                              <div className="grid grid-cols-2 gap-2 text-sm">
-                                {record.vitalSigns.bloodPressure && (
+<div className="grid grid-cols-2 gap-2 text-sm">
+                                {(record.vitalSigns?.bloodPressure || record.vital_signs_blood_pressure_c) && (
                                   <div>
                                     <span className="text-gray-500">BP:</span>
-                                    <span className="ml-1 font-medium">{record.vitalSigns.bloodPressure}</span>
+                                    <span className="ml-1 font-medium">{record.vitalSigns?.bloodPressure || record.vital_signs_blood_pressure_c}</span>
                                   </div>
                                 )}
-                                {record.vitalSigns.temperature && (
+                                {(record.vitalSigns?.temperature || record.vital_signs_temperature_c) && (
                                   <div>
                                     <span className="text-gray-500">Temp:</span>
-                                    <span className="ml-1 font-medium">{record.vitalSigns.temperature}°F</span>
+                                    <span className="ml-1 font-medium">{record.vitalSigns?.temperature || record.vital_signs_temperature_c}°F</span>
                                   </div>
                                 )}
-                                {record.vitalSigns.heartRate && (
+                                {(record.vitalSigns?.heartRate || record.vital_signs_heart_rate_c) && (
                                   <div>
                                     <span className="text-gray-500">HR:</span>
-                                    <span className="ml-1 font-medium">{record.vitalSigns.heartRate} bpm</span>
+                                    <span className="ml-1 font-medium">{record.vitalSigns?.heartRate || record.vital_signs_heart_rate_c} bpm</span>
                                   </div>
                                 )}
-                                {record.vitalSigns.weight && (
+                                {(record.vitalSigns?.weight || record.vital_signs_weight_c) && (
                                   <div>
                                     <span className="text-gray-500">Weight:</span>
-                                    <span className="ml-1 font-medium">{record.vitalSigns.weight} lbs</span>
+                                    <span className="ml-1 font-medium">{record.vitalSigns?.weight || record.vital_signs_weight_c} lbs</span>
                                   </div>
                                 )}
                               </div>
@@ -389,32 +390,36 @@ const MedicalRecords = ({ onMenuClick }) => {
                           )}
 
                           {/* Prescription */}
-                          {record.prescription && record.prescription.length > 0 && (
+{(record.prescription_c || (record.prescription && record.prescription.length > 0)) && (
                             <div>
                               <h4 className="font-semibold text-gray-900 mb-2 flex items-center">
                                 <ApperIcon name="Pill" className="w-4 h-4 mr-2 text-accent" />
                                 Prescription
                               </h4>
                               <div className="space-y-1">
-                                {record.prescription.map((med, index) => (
+                                {(record.prescription || []).map((med, index) => (
                                   <div key={index} className="flex items-center text-sm">
                                     <div className="w-2 h-2 bg-accent rounded-full mr-2"></div>
                                     <span className="font-medium">{med.medication}</span>
                                     <span className="text-gray-500 ml-2">- {med.dosage}</span>
                                   </div>
                                 ))}
+                                {record.prescription_c && typeof record.prescription_c === 'string' && (
+                                  <div className="text-sm text-gray-700">{record.prescription_c}</div>
+                                )}
                               </div>
                             </div>
                           )}
 
                           {/* Notes */}
-                          {record.notes && (
+{/* Notes */}
+                          {(record.notes_c || record.notes) && (
                             <div>
                               <h4 className="font-semibold text-gray-900 mb-2 flex items-center">
-                                <ApperIcon name="MessageSquare" className="w-4 h-4 mr-2 text-warning" />
-                                Additional Notes
+                                <ApperIcon name="FileText" className="w-4 h-4 mr-2 text-info" />
+                                Notes
                               </h4>
-                              <p className="text-sm text-gray-700">{record.notes}</p>
+                              <p className="text-sm text-gray-700">{record.notes_c || record.notes}</p>
                             </div>
                           )}
                         </div>

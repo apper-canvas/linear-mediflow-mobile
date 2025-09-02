@@ -15,15 +15,15 @@ const AppointmentForm = ({
   preselectedDate,
   preselectedTime 
 }) => {
-  const [formData, setFormData] = useState({
+const [formData, setFormData] = useState({
     patientId: "",
     doctorId: "", 
-    date: preselectedDate ? format(preselectedDate, "yyyy-MM-dd") : format(new Date(), "yyyy-MM-dd"),
-    timeSlot: preselectedTime || "09:00",
-    duration: 30,
-    type: "",
-    status: "pending",
-    notes: ""
+    date_c: preselectedDate ? format(preselectedDate, "yyyy-MM-dd") : format(new Date(), "yyyy-MM-dd"),
+    time_slot_c: preselectedTime || "09:00",
+    duration_c: 30,
+    type_c: "",
+    status_c: "pending",
+    notes_c: ""
   });
 
   const [errors, setErrors] = useState({});
@@ -46,40 +46,45 @@ const AppointmentForm = ({
     return `${hour.toString().padStart(2, "0")}:${minute.toString().padStart(2, "0")}`;
   });
 
-  useEffect(() => {
+useEffect(() => {
     if (appointment) {
       setFormData({
-        ...appointment,
-        date: appointment.date?.split("T")[0] || format(new Date(), "yyyy-MM-dd")
+        patientId: appointment.patientId || "",
+        doctorId: appointment.doctorId || "",
+        date_c: appointment.date_c?.split("T")[0] || appointment.date?.split("T")[0] || format(new Date(), "yyyy-MM-dd"),
+        time_slot_c: appointment.time_slot_c || appointment.timeSlot || "09:00",
+        duration_c: appointment.duration_c || appointment.duration || 30,
+        type_c: appointment.type_c || appointment.type || "",
+        status_c: appointment.status_c || appointment.status || "pending",
+        notes_c: appointment.notes_c || appointment.notes || ""
       });
     }
   }, [appointment]);
 
-  useEffect(() => {
+useEffect(() => {
     if (formData.doctorId) {
       const doctor = doctors.find(d => d.Id === parseInt(formData.doctorId));
       setSelectedDoctor(doctor);
       if (doctor) {
-        setFormData(prev => ({ ...prev, duration: doctor.appointmentDuration }));
+        setFormData(prev => ({ ...prev, duration_c: doctor.appointmentDuration }));
       }
     }
   }, [formData.doctorId, doctors]);
 
   const validateForm = () => {
-    const newErrors = {};
+const newErrors = {};
 
     if (!formData.patientId) newErrors.patientId = "Please select a patient";
     if (!formData.doctorId) newErrors.doctorId = "Please select a doctor";
-    if (!formData.date) newErrors.date = "Date is required";
-    if (!formData.timeSlot) newErrors.timeSlot = "Time slot is required";
-    if (!formData.type) newErrors.type = "Appointment type is required";
-
+    if (!formData.date_c) newErrors.date_c = "Date is required";
+    if (!formData.time_slot_c) newErrors.time_slot_c = "Time slot is required";
+    if (!formData.type_c) newErrors.type_c = "Appointment type is required";
     // Validate future date
-    const selectedDate = new Date(formData.date);
+const selectedDate = new Date(formData.date_c);
     const today = new Date();
     today.setHours(0, 0, 0, 0);
     if (selectedDate < today) {
-      newErrors.date = "Appointment date cannot be in the past";
+      newErrors.date_c = "Appointment date cannot be in the past";
     }
 
     setErrors(newErrors);
@@ -89,11 +94,11 @@ const AppointmentForm = ({
   const handleSubmit = (e) => {
     e.preventDefault();
     if (validateForm()) {
-      onSubmit({
+onSubmit({
         ...formData,
         patientId: parseInt(formData.patientId),
         doctorId: parseInt(formData.doctorId),
-        duration: parseInt(formData.duration)
+        duration_c: parseInt(formData.duration_c)
       });
     }
   };
@@ -105,12 +110,12 @@ const AppointmentForm = ({
     }
   };
 
-  const getPatientDisplay = (patient) => {
-    return `${patient.firstName} ${patient.lastName} (ID: ${patient.id})`;
+const getPatientDisplay = (patient) => {
+    return `${patient.first_name_c} ${patient.last_name_c} (ID: ${patient.id_c})`;
   };
 
-  const getDoctorDisplay = (doctor) => {
-    return `Dr. ${doctor.name} - ${doctor.specialization}`;
+const getDoctorDisplay = (doctor) => {
+    return `Dr. ${doctor.name_c || doctor.name} - ${doctor.specialization_c || doctor.specialization}`;
   };
 
   return (
@@ -195,8 +200,8 @@ const AppointmentForm = ({
               label="Date"
               type="date"
               required
-              value={formData.date}
-              onChange={(e) => handleInputChange("date", e.target.value)}
+value={formData.date_c}
+              onChange={(e) => handleInputChange("date_c", e.target.value)}
               error={errors.date}
               min={format(new Date(), "yyyy-MM-dd")}
             />
@@ -205,8 +210,9 @@ const AppointmentForm = ({
               <label className="block text-sm font-medium text-gray-700">
                 Time Slot <span className="text-error ml-1">*</span>
               </label>
-              <select
-                value={formData.timeSlot}
+<select
+                value={formData.time_slot_c}
+                onChange={(e) => handleInputChange("time_slot_c", e.target.value)}
                 onChange={(e) => handleInputChange("timeSlot", e.target.value)}
                 className="flex h-10 w-full rounded-lg border-2 border-gray-200 bg-white px-3 py-2 text-sm font-medium text-gray-900 focus:border-accent focus:ring-4 focus:ring-accent/10 focus:outline-none"
               >
@@ -223,8 +229,8 @@ const AppointmentForm = ({
             <Input
               label="Duration (minutes)"
               type="number"
-              value={formData.duration}
-              onChange={(e) => handleInputChange("duration", parseInt(e.target.value))}
+value={formData.duration_c}
+              onChange={(e) => handleInputChange("duration_c", parseInt(e.target.value))}
               min="15"
               max="120"
               step="15"
@@ -248,8 +254,8 @@ const AppointmentForm = ({
                 Appointment Type <span className="text-error ml-1">*</span>
               </label>
               <select
-                value={formData.type}
-                onChange={(e) => handleInputChange("type", e.target.value)}
+value={formData.type_c}
+                onChange={(e) => handleInputChange("type_c", e.target.value)}
                 className="flex h-10 w-full rounded-lg border-2 border-gray-200 bg-white px-3 py-2 text-sm font-medium text-gray-900 focus:border-warning focus:ring-4 focus:ring-warning/10 focus:outline-none"
               >
                 <option value="">Select type</option>
@@ -267,8 +273,8 @@ const AppointmentForm = ({
                 Status
               </label>
               <select
-                value={formData.status}
-                onChange={(e) => handleInputChange("status", e.target.value)}
+value={formData.status_c}
+                onChange={(e) => handleInputChange("status_c", e.target.value)}
                 className="flex h-10 w-full rounded-lg border-2 border-gray-200 bg-white px-3 py-2 text-sm font-medium text-gray-900 focus:border-primary focus:ring-4 focus:ring-primary/10 focus:outline-none"
               >
                 <option value="pending">Pending</option>
@@ -284,8 +290,8 @@ const AppointmentForm = ({
               Additional Notes
             </label>
             <textarea
-              value={formData.notes}
-              onChange={(e) => handleInputChange("notes", e.target.value)}
+value={formData.notes_c}
+              onChange={(e) => handleInputChange("notes_c", e.target.value)}
               rows={3}
               className="flex w-full rounded-lg border-2 border-gray-200 bg-white px-3 py-2 text-sm font-medium text-gray-900 placeholder-gray-400 focus:border-primary focus:ring-4 focus:ring-primary/10 focus:outline-none resize-none"
               placeholder="Enter any additional notes or special instructions..."

@@ -18,11 +18,11 @@ const PatientTable = ({ patients, onViewPatient, onEditPatient, onDeletePatient 
     }
   };
 
-  const sortedPatients = [...patients].sort((a, b) => {
+const sortedPatients = [...patients].sort((a, b) => {
     let aValue = a[sortField];
     let bValue = b[sortField];
 
-    if (sortField === "dateOfBirth" || sortField === "registrationDate") {
+    if (sortField === "date_of_birth_c" || sortField === "registration_date_c") {
       aValue = new Date(aValue);
       bValue = new Date(bValue);
     }
@@ -105,39 +105,39 @@ const PatientTable = ({ patients, onViewPatient, onEditPatient, onDeletePatient 
                   <td className="px-6 py-4 whitespace-nowrap">
                     <div className="flex items-center">
                       <div className="w-10 h-10 bg-gradient-to-r from-primary to-primary-700 rounded-full flex items-center justify-center shadow-sm">
-                        <span className="text-white font-semibold text-sm">
-                          {patient.firstName.charAt(0)}{patient.lastName.charAt(0)}
+<span className="text-white font-semibold text-sm">
+                          {patient.first_name_c?.charAt(0) || ""}{patient.last_name_c?.charAt(0) || ""}
                         </span>
                       </div>
                       <div className="ml-4">
-                        <div className="text-sm font-medium text-gray-900">
-                          {patient.firstName} {patient.lastName}
+<div className="text-sm font-medium text-gray-900">
+                          {patient.first_name_c} {patient.last_name_c}
                         </div>
                         <div className="text-sm text-gray-500">
-                          ID: {patient.id}
+                          ID: {patient.id_c}
                         </div>
                       </div>
                     </div>
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap">
-                    <div className="text-sm text-gray-900">{patient.phone}</div>
-                    <div className="text-sm text-gray-500">{patient.email}</div>
+<div className="text-sm text-gray-900">{patient.phone_c}</div>
+                    <div className="text-sm text-gray-500">{patient.email_c}</div>
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap">
-                    <div className="text-sm text-gray-900">
-                      {new Date().getFullYear() - new Date(patient.dateOfBirth).getFullYear()} years
+<div className="text-sm text-gray-900">
+                      {patient.date_of_birth_c ? new Date().getFullYear() - new Date(patient.date_of_birth_c).getFullYear() : 0} years
                     </div>
                     <div className="text-sm text-gray-500">
-                      {format(parseISO(patient.dateOfBirth), "MMM dd, yyyy")}
+                      {patient.date_of_birth_c ? format(parseISO(patient.date_of_birth_c), "MMM dd, yyyy") : "N/A"}
                     </div>
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap">
-                    <Badge variant={getBloodTypeColor(patient.bloodType)}>
-                      {patient.bloodType}
+<Badge variant={getBloodTypeColor(patient.blood_type_c)}>
+                      {patient.blood_type_c}
                     </Badge>
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                    {format(parseISO(patient.registrationDate), "MMM dd, yyyy")}
+{patient.registration_date_c ? format(parseISO(patient.registration_date_c), "MMM dd, yyyy") : "N/A"}
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                     <div className="flex items-center justify-end space-x-2">

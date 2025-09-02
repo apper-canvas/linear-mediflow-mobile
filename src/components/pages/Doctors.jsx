@@ -70,11 +70,11 @@ const Doctors = ({ onMenuClick }) => {
       return;
     }
 
-    const filtered = doctors.filter(doctor =>
-      doctor.name.toLowerCase().includes(query.toLowerCase()) ||
-      doctor.specialization.toLowerCase().includes(query.toLowerCase()) ||
-      doctor.email.toLowerCase().includes(query.toLowerCase()) ||
-      doctor.phone.includes(query)
+const filtered = doctors.filter(doctor =>
+      (doctor.name_c || doctor.name || "").toLowerCase().includes(query.toLowerCase()) ||
+      (doctor.specialization_c || doctor.specialization || "").toLowerCase().includes(query.toLowerCase()) ||
+      (doctor.email_c || doctor.email || "").toLowerCase().includes(query.toLowerCase()) ||
+      (doctor.phone_c || doctor.phone || "").includes(query)
     );
     setFilteredDoctors(filtered);
   };
@@ -84,18 +84,18 @@ const Doctors = ({ onMenuClick }) => {
   };
 
   const getDoctorStats = (doctorId) => {
-    const doctorAppts = getDoctorAppointments(doctorId);
+const doctorAppts = getDoctorAppointments(doctorId);
     const today = new Date();
     today.setHours(0, 0, 0, 0);
     
     const todayAppts = doctorAppts.filter(apt => {
-      const aptDate = new Date(apt.date);
+      const aptDate = new Date(apt.date_c || apt.date);
       aptDate.setHours(0, 0, 0, 0);
       return aptDate.getTime() === today.getTime();
     });
 
     const thisWeek = doctorAppts.filter(apt => {
-      const aptDate = new Date(apt.date);
+      const aptDate = new Date(apt.date_c || apt.date);
       const weekStart = new Date(today);
       weekStart.setDate(today.getDate() - today.getDay());
       const weekEnd = new Date(weekStart);
@@ -188,11 +188,11 @@ const Doctors = ({ onMenuClick }) => {
                             <ApperIcon name="UserCheck" className="w-6 h-6 text-white" />
                           </div>
                           <div>
-                            <h3 className="text-lg font-semibold text-gray-900">
-                              Dr. {doctor.name}
+<h3 className="text-lg font-semibold text-gray-900">
+                              Dr. {doctor.name_c || doctor.name}
                             </h3>
-                            <Badge variant={getSpecializationColor(doctor.specialization)} className="text-xs">
-                              {doctor.specialization}
+                            <Badge variant={getSpecializationColor(doctor.specialization_c || doctor.specialization)} className="text-xs">
+                              {doctor.specialization_c || doctor.specialization}
                             </Badge>
                           </div>
                         </div>
@@ -201,19 +201,19 @@ const Doctors = ({ onMenuClick }) => {
                       <div className="space-y-3">
                         <div className="flex items-center text-sm text-gray-600">
                           <ApperIcon name="Phone" className="w-4 h-4 mr-2" />
-                          {doctor.phone}
+{doctor.phone_c || doctor.phone}
                         </div>
                         <div className="flex items-center text-sm text-gray-600">
                           <ApperIcon name="Mail" className="w-4 h-4 mr-2" />
-                          {doctor.email}
+                          {doctor.email_c || doctor.email}
                         </div>
                         <div className="flex items-center text-sm text-gray-600">
                           <ApperIcon name="Clock" className="w-4 h-4 mr-2" />
-                          {doctor.appointmentDuration} min slots
+                          {doctor.appointment_duration_c || doctor.appointmentDuration} min slots
                         </div>
                         <div className="flex items-center text-sm text-gray-600">
                           <ApperIcon name="Award" className="w-4 h-4 mr-2" />
-                          License: {doctor.license}
+                          License: {doctor.license_c || doctor.license}
                         </div>
                       </div>
 
@@ -346,7 +346,7 @@ const Doctors = ({ onMenuClick }) => {
                     <ApperIcon name="Activity" className="w-6 h-6 text-white" />
                   </div>
                   <div className="text-2xl font-bold text-gray-900">
-                    {new Set(doctors.map(d => d.specialization)).size}
+{new Set(doctors.map(d => d.specialization_c || d.specialization)).size}
                   </div>
                   <div className="text-sm text-gray-600">Specializations</div>
                 </div>
@@ -356,7 +356,7 @@ const Doctors = ({ onMenuClick }) => {
                     <ApperIcon name="Clock" className="w-6 h-6 text-white" />
                   </div>
                   <div className="text-2xl font-bold text-gray-900">
-                    {Math.round(doctors.reduce((total, doctor) => total + doctor.appointmentDuration, 0) / doctors.length)}
+{Math.round(doctors.reduce((total, doctor) => total + (doctor.appointment_duration_c || doctor.appointmentDuration || 30), 0) / doctors.length)}
                   </div>
                   <div className="text-sm text-gray-600">Avg Slot Duration</div>
                 </div>

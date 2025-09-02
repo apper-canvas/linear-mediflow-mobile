@@ -19,14 +19,14 @@ const AppointmentCalendar = ({ appointments, doctors, patients, onBookAppointmen
   });
 
   const getAppointmentsForDateAndTime = (date, timeSlot) => {
-    return appointments.filter(apt => 
-      isSameDay(parseISO(apt.date), date) && apt.timeSlot === timeSlot
+return appointments.filter(apt => 
+      isSameDay(parseISO(apt.date_c || apt.date), date) && (apt.time_slot_c || apt.timeSlot) === timeSlot
     );
   };
 
   const getDayAppointments = (date) => {
-    return appointments.filter(apt => 
-      isSameDay(parseISO(apt.date), date)
+return appointments.filter(apt => 
+      isSameDay(parseISO(apt.date_c || apt.date), date)
     );
   };
 
@@ -144,7 +144,7 @@ const AppointmentCalendar = ({ appointments, doctors, patients, onBookAppointmen
                       {dayAppointments.length > 0 ? (
                         <div className="space-y-1">
                           {dayAppointments.slice(0, 2).map((apt) => {
-                            const patient = patients.find(p => p.Id === parseInt(apt.patientId));
+const patient = patients.find(p => p.Id === parseInt(apt.patientId));
                             const doctor = doctors.find(d => d.Id === parseInt(apt.doctorId));
                             
                             return (
@@ -153,14 +153,14 @@ const AppointmentCalendar = ({ appointments, doctors, patients, onBookAppointmen
                                 onClick={() => onViewAppointment(apt)}
                                 className="text-xs p-2 rounded-md cursor-pointer transition-all duration-200 hover:shadow-sm bg-gradient-to-r from-primary/10 to-primary/20 border border-primary/20 hover:from-primary/20 hover:to-primary/30"
                               >
-                                <div className="font-semibold text-primary text-[10px] truncate">
-                                  {patient ? `${patient.firstName} ${patient.lastName}` : "Unknown"}
+<div className="font-semibold text-primary text-[10px] truncate">
+                                  {patient ? `${patient.first_name_c} ${patient.last_name_c}` : "Unknown"}
                                 </div>
                                 <div className="text-gray-600 text-[10px] truncate">
-                                  Dr. {doctor?.name || "Unknown"}
+Dr. {doctor?.name_c || doctor?.name || "Unknown"}
                                 </div>
-                                <Badge variant={getStatusColor(apt.status)} className="text-[8px] px-1 py-0">
-                                  {apt.status}
+<Badge variant={getStatusColor(apt.status_c || apt.status)} className="text-[8px] px-1 py-0">
+                                  {apt.status_c || apt.status}
                                 </Badge>
                               </div>
                             );
@@ -216,16 +216,16 @@ const AppointmentCalendar = ({ appointments, doctors, patients, onBookAppointmen
                           <ApperIcon name="Clock" className="w-5 h-5 text-white" />
                         </div>
                         <div>
-                          <div className="font-semibold text-gray-900">
-                            {apt.timeSlot} - {patient ? `${patient.firstName} ${patient.lastName}` : "Unknown Patient"}
+<div className="font-semibold text-gray-900">
+                            {apt.time_slot_c || apt.timeSlot} - {patient ? `${patient.first_name_c} ${patient.last_name_c}` : "Unknown Patient"}
                           </div>
-                          <div className="text-sm text-gray-600">
-                            Dr. {doctor?.name || "Unknown"} • {apt.type}
+<div className="text-sm text-gray-600">
+                            Dr. {doctor?.name_c || doctor?.name || "Unknown"} • {apt.type_c || apt.type}
                           </div>
                         </div>
                       </div>
-                      <Badge variant={getStatusColor(apt.status)}>
-                        {apt.status}
+<Badge variant={getStatusColor(apt.status_c || apt.status)}>
+                        {apt.status_c || apt.status}
                       </Badge>
                     </div>
                   );

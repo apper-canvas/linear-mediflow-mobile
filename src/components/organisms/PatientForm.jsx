@@ -5,56 +5,58 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/atoms/Car
 import ApperIcon from "@/components/ApperIcon";
 
 const PatientForm = ({ patient, onSubmit, onCancel, isLoading }) => {
-  const [formData, setFormData] = useState({
-    firstName: "",
-    lastName: "",
-    dateOfBirth: "",
-    gender: "",
-    phone: "",
-    email: "",
-    address: "",
-    emergencyContact: {
-      name: "",
-      relationship: "",
-      phone: ""
-    },
-    allergies: [],
-    bloodType: "",
-    registrationDate: new Date().toISOString().split("T")[0]
+const [formData, setFormData] = useState({
+    first_name_c: "",
+    last_name_c: "",
+    date_of_birth_c: "",
+    gender_c: "",
+    phone_c: "",
+    email_c: "",
+    address_c: "",
+    emergency_contact_name_c: "",
+    emergency_contact_relationship_c: "",
+    emergency_contact_phone_c: "",
+    allergies_c: [],
+    blood_type_c: "",
+    registration_date_c: new Date().toISOString().split("T")[0]
   });
 
   const [errors, setErrors] = useState({});
   const [newAllergy, setNewAllergy] = useState("");
 
-  useEffect(() => {
+useEffect(() => {
     if (patient) {
       setFormData({
-        ...patient,
-        dateOfBirth: patient.dateOfBirth?.split("T")[0] || "",
-        registrationDate: patient.registrationDate?.split("T")[0] || "",
-        emergencyContact: patient.emergencyContact || {
-          name: "",
-          relationship: "",
-          phone: ""
-        },
-        allergies: patient.allergies || []
+        first_name_c: patient.first_name_c || "",
+        last_name_c: patient.last_name_c || "",
+        date_of_birth_c: patient.date_of_birth_c?.split("T")[0] || "",
+        gender_c: patient.gender_c || "",
+        phone_c: patient.phone_c || "",
+        email_c: patient.email_c || "",
+        address_c: patient.address_c || "",
+        emergency_contact_name_c: patient.emergency_contact_name_c || "",
+        emergency_contact_relationship_c: patient.emergency_contact_relationship_c || "",
+        emergency_contact_phone_c: patient.emergency_contact_phone_c || "",
+        allergies_c: Array.isArray(patient.allergies_c) 
+          ? patient.allergies_c 
+          : (typeof patient.allergies_c === 'string' ? patient.allergies_c.split(', ').filter(Boolean) : []),
+        blood_type_c: patient.blood_type_c || "",
+        registration_date_c: patient.registration_date_c?.split("T")[0] || ""
       });
     }
   }, [patient]);
 
   const validateForm = () => {
     const newErrors = {};
-
-    if (!formData.firstName.trim()) newErrors.firstName = "First name is required";
-    if (!formData.lastName.trim()) newErrors.lastName = "Last name is required";
-    if (!formData.dateOfBirth) newErrors.dateOfBirth = "Date of birth is required";
-    if (!formData.gender) newErrors.gender = "Gender is required";
-    if (!formData.phone.trim()) newErrors.phone = "Phone number is required";
-    if (!formData.email.trim()) newErrors.email = "Email is required";
-    if (!formData.bloodType) newErrors.bloodType = "Blood type is required";
-    
-    if (formData.email && !/\S+@\S+\.\S+/.test(formData.email)) {
-      newErrors.email = "Please enter a valid email address";
+if (!formData.first_name_c.trim()) newErrors.first_name_c = "First name is required";
+    if (!formData.last_name_c.trim()) newErrors.last_name_c = "Last name is required";
+    if (!formData.date_of_birth_c) newErrors.date_of_birth_c = "Date of birth is required";
+    if (!formData.gender_c) newErrors.gender_c = "Gender is required";
+    if (!formData.phone_c.trim()) newErrors.phone_c = "Phone number is required";
+    if (!formData.email_c.trim()) newErrors.email_c = "Email is required";
+    if (!formData.blood_type_c) newErrors.blood_type_c = "Blood type is required";
+if (formData.email_c && !/\S+@\S+\.\S+/.test(formData.email_c)) {
+      newErrors.email_c = "Please enter a valid email address";
     }
 
     setErrors(newErrors);
@@ -75,27 +77,32 @@ const PatientForm = ({ patient, onSubmit, onCancel, isLoading }) => {
     }
   };
 
-  const handleEmergencyContactChange = (field, value) => {
-    setFormData(prev => ({
-      ...prev,
-      emergencyContact: { ...prev.emergencyContact, [field]: value }
-    }));
+const handleEmergencyContactChange = (field, value) => {
+    const fieldMap = {
+      name: 'emergency_contact_name_c',
+      relationship: 'emergency_contact_relationship_c',
+      phone: 'emergency_contact_phone_c'
+    };
+    const dbField = fieldMap[field];
+    if (dbField) {
+      setFormData(prev => ({ ...prev, [dbField]: value }));
+    }
   };
 
-  const addAllergy = () => {
-    if (newAllergy.trim() && !formData.allergies.includes(newAllergy.trim())) {
+const addAllergy = () => {
+    if (newAllergy.trim() && !formData.allergies_c.includes(newAllergy.trim())) {
       setFormData(prev => ({
         ...prev,
-        allergies: [...prev.allergies, newAllergy.trim()]
+        allergies_c: [...prev.allergies_c, newAllergy.trim()]
       }));
       setNewAllergy("");
     }
   };
 
-  const removeAllergy = (allergyToRemove) => {
+const removeAllergy = (allergyToRemove) => {
     setFormData(prev => ({
       ...prev,
-      allergies: prev.allergies.filter(allergy => allergy !== allergyToRemove)
+      allergies_c: prev.allergies_c.filter(allergy => allergy !== allergyToRemove)
     }));
   };
 
@@ -114,16 +121,16 @@ const PatientForm = ({ patient, onSubmit, onCancel, isLoading }) => {
             <Input
               label="First Name"
               required
-              value={formData.firstName}
-              onChange={(e) => handleInputChange("firstName", e.target.value)}
+value={formData.first_name_c}
+              onChange={(e) => handleInputChange("first_name_c", e.target.value)}
               error={errors.firstName}
               placeholder="Enter first name"
             />
             <Input
               label="Last Name"
               required
-              value={formData.lastName}
-              onChange={(e) => handleInputChange("lastName", e.target.value)}
+value={formData.last_name_c}
+              onChange={(e) => handleInputChange("last_name_c", e.target.value)}
               error={errors.lastName}
               placeholder="Enter last name"
             />
@@ -134,8 +141,8 @@ const PatientForm = ({ patient, onSubmit, onCancel, isLoading }) => {
               label="Date of Birth"
               type="date"
               required
-              value={formData.dateOfBirth}
-              onChange={(e) => handleInputChange("dateOfBirth", e.target.value)}
+value={formData.date_of_birth_c}
+              onChange={(e) => handleInputChange("date_of_birth_c", e.target.value)}
               error={errors.dateOfBirth}
             />
             <div className="space-y-2">
@@ -143,8 +150,8 @@ const PatientForm = ({ patient, onSubmit, onCancel, isLoading }) => {
                 Gender <span className="text-error ml-1">*</span>
               </label>
               <select
-                value={formData.gender}
-                onChange={(e) => handleInputChange("gender", e.target.value)}
+value={formData.gender_c}
+                onChange={(e) => handleInputChange("gender_c", e.target.value)}
                 className="flex h-10 w-full rounded-lg border-2 border-gray-200 bg-white px-3 py-2 text-sm font-medium text-gray-900 focus:border-primary focus:ring-4 focus:ring-primary/10 focus:outline-none"
               >
                 <option value="">Select gender</option>
@@ -159,8 +166,8 @@ const PatientForm = ({ patient, onSubmit, onCancel, isLoading }) => {
                 Blood Type <span className="text-error ml-1">*</span>
               </label>
               <select
-                value={formData.bloodType}
-                onChange={(e) => handleInputChange("bloodType", e.target.value)}
+value={formData.blood_type_c}
+                onChange={(e) => handleInputChange("blood_type_c", e.target.value)}
                 className="flex h-10 w-full rounded-lg border-2 border-gray-200 bg-white px-3 py-2 text-sm font-medium text-gray-900 focus:border-primary focus:ring-4 focus:ring-primary/10 focus:outline-none"
               >
                 <option value="">Select blood type</option>
@@ -192,8 +199,8 @@ const PatientForm = ({ patient, onSubmit, onCancel, isLoading }) => {
             <Input
               label="Phone Number"
               required
-              value={formData.phone}
-              onChange={(e) => handleInputChange("phone", e.target.value)}
+value={formData.phone_c}
+              onChange={(e) => handleInputChange("phone_c", e.target.value)}
               error={errors.phone}
               placeholder="(555) 123-4567"
             />
@@ -201,8 +208,8 @@ const PatientForm = ({ patient, onSubmit, onCancel, isLoading }) => {
               label="Email Address"
               type="email"
               required
-              value={formData.email}
-              onChange={(e) => handleInputChange("email", e.target.value)}
+value={formData.email_c}
+              onChange={(e) => handleInputChange("email_c", e.target.value)}
               error={errors.email}
               placeholder="patient@example.com"
             />
@@ -210,8 +217,8 @@ const PatientForm = ({ patient, onSubmit, onCancel, isLoading }) => {
           
           <Input
             label="Address"
-            value={formData.address}
-            onChange={(e) => handleInputChange("address", e.target.value)}
+value={formData.address_c}
+            onChange={(e) => handleInputChange("address_c", e.target.value)}
             placeholder="Enter full address"
           />
         </CardContent>
@@ -229,19 +236,21 @@ const PatientForm = ({ patient, onSubmit, onCancel, isLoading }) => {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <Input
               label="Contact Name"
-              value={formData.emergencyContact.name}
+value={formData.emergency_contact_name_c}
               onChange={(e) => handleEmergencyContactChange("name", e.target.value)}
               placeholder="Full name"
             />
             <Input
               label="Relationship"
               value={formData.emergencyContact.relationship}
+value={formData.emergency_contact_relationship_c}
               onChange={(e) => handleEmergencyContactChange("relationship", e.target.value)}
               placeholder="e.g., Spouse, Parent"
             />
             <Input
               label="Phone Number"
               value={formData.emergencyContact.phone}
+value={formData.emergency_contact_phone_c}
               onChange={(e) => handleEmergencyContactChange("phone", e.target.value)}
               placeholder="(555) 123-4567"
             />
@@ -285,7 +294,7 @@ const PatientForm = ({ patient, onSubmit, onCancel, isLoading }) => {
               </Button>
             </div>
             <div className="flex flex-wrap gap-2">
-              {formData.allergies.map((allergy, index) => (
+{formData.allergies_c.map((allergy, index) => (
                 <span
                   key={index}
                   className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-gradient-to-r from-error/10 to-error/20 text-error border border-error/30"

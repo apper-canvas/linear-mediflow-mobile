@@ -63,12 +63,12 @@ const Patients = ({ onMenuClick }) => {
       return;
     }
 
-    const filtered = patients.filter(patient =>
-      patient.firstName.toLowerCase().includes(query.toLowerCase()) ||
-      patient.lastName.toLowerCase().includes(query.toLowerCase()) ||
-      patient.email.toLowerCase().includes(query.toLowerCase()) ||
-      patient.phone.includes(query) ||
-      patient.id?.toLowerCase().includes(query.toLowerCase())
+const filtered = patients.filter(patient =>
+      (patient.first_name_c || "").toLowerCase().includes(query.toLowerCase()) ||
+      (patient.last_name_c || "").toLowerCase().includes(query.toLowerCase()) ||
+      (patient.email_c || "").toLowerCase().includes(query.toLowerCase()) ||
+      (patient.phone_c || "").includes(query) ||
+      (patient.id_c || "").toLowerCase().includes(query.toLowerCase())
     );
     setFilteredPatients(filtered);
   };
@@ -242,20 +242,20 @@ const Patients = ({ onMenuClick }) => {
                 <div className="flex items-center space-x-4">
                   <div className="w-16 h-16 bg-gradient-to-r from-primary to-primary-700 rounded-full flex items-center justify-center shadow-lg">
                     <span className="text-white font-bold text-xl">
-                      {selectedPatient.firstName.charAt(0)}{selectedPatient.lastName.charAt(0)}
+{selectedPatient.first_name_c?.charAt(0) || ""}{selectedPatient.last_name_c?.charAt(0) || ""}
                     </span>
                   </div>
                   <div>
                     <h3 className="text-2xl font-bold text-gray-900">
-                      {selectedPatient.firstName} {selectedPatient.lastName}
+                      {selectedPatient.first_name_c} {selectedPatient.last_name_c}
                     </h3>
-                    <p className="text-sm text-gray-600">Patient ID: {selectedPatient.id}</p>
+                    <p className="text-sm text-gray-600">Patient ID: {selectedPatient.id_c}</p>
                     <div className="flex items-center space-x-2 mt-2">
-                      <Badge variant={getBloodTypeColor(selectedPatient.bloodType)}>
-                        {selectedPatient.bloodType}
+                      <Badge variant={getBloodTypeColor(selectedPatient.blood_type_c)}>
+                        {selectedPatient.blood_type_c}
                       </Badge>
                       <Badge variant="primary">
-                        {selectedPatient.gender}
+                        {selectedPatient.gender_c}
                       </Badge>
                     </div>
                   </div>
@@ -285,17 +285,17 @@ const Patients = ({ onMenuClick }) => {
                   <CardContent className="space-y-3">
                     <div>
                       <label className="text-xs font-medium text-gray-500 uppercase tracking-wide">Date of Birth</label>
-                      <p className="text-sm font-medium text-gray-900">
-                        {format(parseISO(selectedPatient.dateOfBirth), "MMMM dd, yyyy")}
+<p className="text-sm font-medium text-gray-900">
+                        {selectedPatient.date_of_birth_c ? format(parseISO(selectedPatient.date_of_birth_c), "MMMM dd, yyyy") : "N/A"}
                         <span className="text-gray-500 ml-2">
-                          ({new Date().getFullYear() - new Date(selectedPatient.dateOfBirth).getFullYear()} years old)
+                          ({selectedPatient.date_of_birth_c ? new Date().getFullYear() - new Date(selectedPatient.date_of_birth_c).getFullYear() : 0} years old)
                         </span>
                       </p>
                     </div>
                     <div>
-                      <label className="text-xs font-medium text-gray-500 uppercase tracking-wide">Registration Date</label>
+<label className="text-xs font-medium text-gray-500 uppercase tracking-wide">Registration Date</label>
                       <p className="text-sm font-medium text-gray-900">
-                        {format(parseISO(selectedPatient.registrationDate), "MMMM dd, yyyy")}
+                        {selectedPatient.registration_date_c ? format(parseISO(selectedPatient.registration_date_c), "MMMM dd, yyyy") : "N/A"}
                       </p>
                     </div>
                   </CardContent>
@@ -311,24 +311,24 @@ const Patients = ({ onMenuClick }) => {
                   </CardHeader>
                   <CardContent className="space-y-3">
                     <div>
-                      <label className="text-xs font-medium text-gray-500 uppercase tracking-wide">Phone</label>
-                      <p className="text-sm font-medium text-gray-900">{selectedPatient.phone}</p>
+<label className="text-xs font-medium text-gray-500 uppercase tracking-wide">Phone</label>
+                      <p className="text-sm font-medium text-gray-900">{selectedPatient.phone_c}</p>
                     </div>
                     <div>
-                      <label className="text-xs font-medium text-gray-500 uppercase tracking-wide">Email</label>
-                      <p className="text-sm font-medium text-gray-900">{selectedPatient.email}</p>
+<label className="text-xs font-medium text-gray-500 uppercase tracking-wide">Email</label>
+                      <p className="text-sm font-medium text-gray-900">{selectedPatient.email_c}</p>
                     </div>
-                    {selectedPatient.address && (
+{selectedPatient.address_c && (
                       <div>
                         <label className="text-xs font-medium text-gray-500 uppercase tracking-wide">Address</label>
-                        <p className="text-sm font-medium text-gray-900">{selectedPatient.address}</p>
+                        <p className="text-sm font-medium text-gray-900">{selectedPatient.address_c}</p>
                       </div>
                     )}
                   </CardContent>
                 </Card>
 
                 {/* Emergency Contact */}
-                {selectedPatient.emergencyContact && selectedPatient.emergencyContact.name && (
+{selectedPatient.emergency_contact_name_c && (
                   <Card>
                     <CardHeader>
                       <CardTitle className="flex items-center text-base">
@@ -339,15 +339,15 @@ const Patients = ({ onMenuClick }) => {
                     <CardContent className="space-y-3">
                       <div>
                         <label className="text-xs font-medium text-gray-500 uppercase tracking-wide">Name</label>
-                        <p className="text-sm font-medium text-gray-900">{selectedPatient.emergencyContact.name}</p>
+                        <p className="text-sm font-medium text-gray-900">{selectedPatient.emergency_contact_name_c}</p>
                       </div>
                       <div>
                         <label className="text-xs font-medium text-gray-500 uppercase tracking-wide">Relationship</label>
-                        <p className="text-sm font-medium text-gray-900">{selectedPatient.emergencyContact.relationship}</p>
+                        <p className="text-sm font-medium text-gray-900">{selectedPatient.emergency_contact_relationship_c}</p>
                       </div>
                       <div>
                         <label className="text-xs font-medium text-gray-500 uppercase tracking-wide">Phone</label>
-                        <p className="text-sm font-medium text-gray-900">{selectedPatient.emergencyContact.phone}</p>
+                        <p className="text-sm font-medium text-gray-900">{selectedPatient.emergency_contact_phone_c}</p>
                       </div>
                     </CardContent>
                   </Card>
@@ -365,16 +365,19 @@ const Patients = ({ onMenuClick }) => {
                     <div>
                       <label className="text-xs font-medium text-gray-500 uppercase tracking-wide">Blood Type</label>
                       <div className="mt-1">
-                        <Badge variant={getBloodTypeColor(selectedPatient.bloodType)} className="text-sm">
-                          {selectedPatient.bloodType}
+<Badge variant={getBloodTypeColor(selectedPatient.blood_type_c)} className="text-sm">
+                          {selectedPatient.blood_type_c}
                         </Badge>
                       </div>
                     </div>
-                    {selectedPatient.allergies && selectedPatient.allergies.length > 0 && (
+{selectedPatient.allergies_c && (
                       <div>
                         <label className="text-xs font-medium text-gray-500 uppercase tracking-wide">Allergies</label>
                         <div className="flex flex-wrap gap-2 mt-1">
-                          {selectedPatient.allergies.map((allergy, index) => (
+                          {(Array.isArray(selectedPatient.allergies_c) 
+                            ? selectedPatient.allergies_c 
+                            : selectedPatient.allergies_c.split(', ').filter(Boolean)
+                          ).map((allergy, index) => (
                             <Badge key={index} variant="warning" className="text-xs">
                               {allergy}
                             </Badge>
