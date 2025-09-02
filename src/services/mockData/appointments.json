@@ -1,0 +1,167 @@
+[
+  {
+    "Id": 1,
+    "patientId": "1",
+    "doctorId": "1",
+    "date": "2024-03-15T00:00:00.000Z",
+    "timeSlot": "09:00",
+    "duration": 30,
+    "type": "Consultation",
+    "status": "confirmed",
+    "notes": "Follow-up appointment for cardiac evaluation"
+  },
+  {
+    "Id": 2,
+    "patientId": "2",
+    "doctorId": "2",
+    "date": "2024-03-15T00:00:00.000Z",
+    "timeSlot": "10:30",
+    "duration": 45,
+    "type": "Follow-up",
+    "status": "confirmed",
+    "notes": "Neurological assessment follow-up"
+  },
+  {
+    "Id": 3,
+    "patientId": "3",
+    "doctorId": "3",
+    "date": "2024-03-15T00:00:00.000Z",
+    "timeSlot": "14:00",
+    "duration": 20,
+    "type": "Vaccination",
+    "status": "pending",
+    "notes": "Annual flu vaccination"
+  },
+  {
+    "Id": 4,
+    "patientId": "4",
+    "doctorId": "4",
+    "date": "2024-03-16T00:00:00.000Z",
+    "timeSlot": "08:00",
+    "duration": 40,
+    "type": "Physical Exam",
+    "status": "confirmed",
+    "notes": "Pre-surgery orthopedic examination"
+  },
+  {
+    "Id": 5,
+    "patientId": "5",
+    "doctorId": "5",
+    "date": "2024-03-16T00:00:00.000Z",
+    "timeSlot": "11:00",
+    "duration": 25,
+    "type": "Consultation",
+    "status": "confirmed",
+    "notes": "Skin condition evaluation"
+  },
+  {
+    "Id": 6,
+    "patientId": "6",
+    "doctorId": "6",
+    "date": "2024-03-16T00:00:00.000Z",
+    "timeSlot": "15:30",
+    "duration": 15,
+    "type": "Follow-up",
+    "status": "pending",
+    "notes": "General health check-up"
+  },
+  {
+    "Id": 7,
+    "patientId": "7",
+    "doctorId": "1",
+    "date": "2024-03-17T00:00:00.000Z",
+    "timeSlot": "09:30",
+    "duration": 30,
+    "type": "Laboratory Test",
+    "status": "completed",
+    "notes": "Blood work and cardiac stress test"
+  },
+  {
+    "Id": 8,
+    "patientId": "8",
+    "doctorId": "3",
+    "date": "2024-03-17T00:00:00.000Z",
+    "timeSlot": "13:00",
+    "duration": 20,
+    "type": "Consultation",
+    "status": "confirmed",
+    "notes": "Pediatric wellness visit"
+  },
+  {
+    "Id": 9,
+    "patientId": "1",
+    "doctorId": "6",
+    "date": "2024-03-18T00:00:00.000Z",
+    "timeSlot": "10:00",
+    "duration": 15,
+    "type": "Follow-up",
+    "status": "pending",
+    "notes": "General health monitoring"
+  },
+  {
+    "Id": 10,
+    "patientId": "3",
+    "doctorId": "5",
+    "date": "2024-03-18T00:00:00.000Z",
+    "timeSlot": "14:30",
+    "duration": 25,
+    "type": "X-Ray",
+    "status": "confirmed",
+    "notes": "Dermatological screening"
+  },
+  {
+    "Id": 11,
+    "patientId": "2",
+    "doctorId": "4",
+    "date": "2024-03-19T00:00:00.000Z",
+    "timeSlot": "08:30",
+    "duration": 40,
+    "type": "Surgery Consultation",
+    "status": "confirmed",
+    "notes": "Pre-operative consultation for knee surgery"
+  },
+  {
+    "Id": 12,
+    "patientId": "4",
+    "doctorId": "2",
+    "date": "2024-03-19T00:00:00.000Z",
+    "timeSlot": "11:15",
+    "duration": 45,
+    "type": "Follow-up",
+    "status": "pending",
+    "notes": "Post-treatment neurological evaluation"
+  },
+  {
+    "Id": 13,
+    "patientId": "5",
+    "doctorId": "1",
+    "date": "2024-03-20T00:00:00.000Z",
+    "timeSlot": "09:00",
+    "duration": 30,
+    "type": "Emergency",
+    "status": "completed",
+    "notes": "Emergency cardiac consultation"
+  },
+  {
+    "Id": 14,
+    "patientId": "6",
+    "doctorId": "3",
+    "date": "2024-03-20T00:00:00.000Z",
+    "timeSlot": "16:00",
+    "duration": 20,
+    "type": "Physical Exam",
+    "status": "confirmed",
+    "notes": "Annual physical examination"
+  },
+  {
+    "Id": 15,
+    "patientId": "7",
+    "doctorId": "6",
+    "date": "2024-03-21T00:00:00.000Z",
+    "timeSlot": "12:00",
+    "duration": 15,
+    "type": "Consultation",
+    "status": "pending",
+    "notes": "General practice consultation"
+  }
+]

@@ -1,0 +1,110 @@
+[
+  {
+    "Id": 1,
+    "name": "Jennifer Martinez",
+    "specialization": "Cardiology",
+    "license": "MD-12345",
+    "phone": "(555) 111-2222",
+    "email": "j.martinez@mediflow.com",
+    "schedule": {
+      "monday": ["08:00", "17:00"],
+      "tuesday": ["08:00", "17:00"],
+      "wednesday": ["08:00", "17:00"],
+      "thursday": ["08:00", "17:00"],
+      "friday": ["08:00", "17:00"],
+      "saturday": ["09:00", "13:00"],
+      "sunday": ["off"]
+    },
+    "appointmentDuration": 30
+  },
+  {
+    "Id": 2,
+    "name": "Michael Anderson",
+    "specialization": "Neurology",
+    "license": "MD-23456",
+    "phone": "(555) 222-3333",
+    "email": "m.anderson@mediflow.com",
+    "schedule": {
+      "monday": ["09:00", "18:00"],
+      "tuesday": ["09:00", "18:00"],
+      "wednesday": ["09:00", "18:00"],
+      "thursday": ["09:00", "18:00"],
+      "friday": ["09:00", "16:00"],
+      "saturday": ["off"],
+      "sunday": ["off"]
+    },
+    "appointmentDuration": 45
+  },
+  {
+    "Id": 3,
+    "name": "Sarah Kim",
+    "specialization": "Pediatrics",
+    "license": "MD-34567",
+    "phone": "(555) 333-4444",
+    "email": "s.kim@mediflow.com",
+    "schedule": {
+      "monday": ["08:30", "17:30"],
+      "tuesday": ["08:30", "17:30"],
+      "wednesday": ["08:30", "17:30"],
+      "thursday": ["08:30", "17:30"],
+      "friday": ["08:30", "16:30"],
+      "saturday": ["09:00", "12:00"],
+      "sunday": ["off"]
+    },
+    "appointmentDuration": 20
+  },
+  {
+    "Id": 4,
+    "name": "James Wilson",
+    "specialization": "Orthopedics",
+    "license": "MD-45678",
+    "phone": "(555) 444-5555",
+    "email": "j.wilson@mediflow.com",
+    "schedule": {
+      "monday": ["07:00", "16:00"],
+      "tuesday": ["07:00", "16:00"],
+      "wednesday": ["07:00", "16:00"],
+      "thursday": ["07:00", "16:00"],
+      "friday": ["07:00", "15:00"],
+      "saturday": ["off"],
+      "sunday": ["off"]
+    },
+    "appointmentDuration": 40
+  },
+  {
+    "Id": 5,
+    "name": "Lisa Patel",
+    "specialization": "Dermatology",
+    "license": "MD-56789",
+    "phone": "(555) 555-6666",
+    "email": "l.patel@mediflow.com",
+    "schedule": {
+      "monday": ["09:00", "17:00"],
+      "tuesday": ["09:00", "17:00"],
+      "wednesday": ["09:00", "17:00"],
+      "thursday": ["09:00", "17:00"],
+      "friday": ["09:00", "17:00"],
+      "saturday": ["10:00", "14:00"],
+      "sunday": ["off"]
+    },
+    "appointmentDuration": 25
+  },
+  {
+    "Id": 6,
+    "name": "Thomas Johnson",
+    "specialization": "General Practice",
+    "license": "MD-67890",
+    "phone": "(555) 666-7777",
+    "email": "t.johnson@mediflow.com",
+    "schedule": {
+      "monday": ["08:00", "18:00"],
+      "tuesday": ["08:00", "18:00"],
+      "wednesday": ["08:00", "18:00"],
+      "thursday": ["08:00", "18:00"],
+      "friday": ["08:00", "17:00"],
+      "saturday": ["09:00", "13:00"],
+      "sunday": ["off"]
+    },
+    "appointmentDuration": 15
+  }
+]

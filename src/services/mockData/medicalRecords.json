@@ -1,0 +1,229 @@
+[
+  {
+    "Id": 1,
+    "patientId": "1",
+    "doctorId": "1",
+    "visitDate": "2024-03-10T00:00:00.000Z",
+    "diagnosis": "Hypertension - Stage 1",
+    "prescription": [
+      {
+        "medication": "Lisinopril",
+        "dosage": "10mg once daily"
+      },
+      {
+        "medication": "Amlodipine",
+        "dosage": "5mg once daily"
+      }
+    ],
+    "notes": "Patient reports occasional chest tightness. Blood pressure readings consistently elevated. Lifestyle modifications recommended including regular exercise and reduced sodium intake.",
+    "vitalSigns": {
+      "bloodPressure": "145/92",
+      "heartRate": "78",
+      "temperature": "98.6",
+      "weight": "185"
+    }
+  },
+  {
+    "Id": 2,
+    "patientId": "2",
+    "doctorId": "2",
+    "visitDate": "2024-03-08T00:00:00.000Z",
+    "diagnosis": "Migraine without aura",
+    "prescription": [
+      {
+        "medication": "Sumatriptan",
+        "dosage": "50mg as needed"
+      },
+      {
+        "medication": "Propranolol",
+        "dosage": "40mg twice daily for prevention"
+      }
+    ],
+    "notes": "Patient experiencing severe headaches 3-4 times per week. Neurological examination normal. MRI scheduled for next month to rule out secondary causes.",
+    "vitalSigns": {
+      "bloodPressure": "118/76",
+      "heartRate": "68",
+      "temperature": "98.4",
+      "weight": "165"
+    }
+  },
+  {
+    "Id": 3,
+    "patientId": "3",
+    "doctorId": "3",
+    "visitDate": "2024-03-05T00:00:00.000Z",
+    "diagnosis": "Acute upper respiratory tract infection",
+    "prescription": [
+      {
+        "medication": "Amoxicillin",
+        "dosage": "500mg three times daily for 7 days"
+      },
+      {
+        "medication": "Acetaminophen",
+        "dosage": "650mg every 6 hours as needed for fever"
+      }
+    ],
+    "notes": "Patient presents with sore throat, nasal congestion, and low-grade fever for 3 days. Physical examination reveals erythematous throat and tender cervical lymph nodes.",
+    "vitalSigns": {
+      "bloodPressure": "110/70",
+      "heartRate": "82",
+      "temperature": "100.2",
+      "weight": "128"
+    }
+  },
+  {
+    "Id": 4,
+    "patientId": "4",
+    "doctorId": "4",
+    "visitDate": "2024-03-12T00:00:00.000Z",
+    "diagnosis": "Osteoarthritis of the knee",
+    "prescription": [
+      {
+        "medication": "Ibuprofen",
+        "dosage": "400mg three times daily with meals"
+      },
+      {
+        "medication": "Glucosamine",
+        "dosage": "1500mg once daily"
+      }
+    ],
+    "notes": "Patient complains of progressive knee pain and stiffness, worse in the morning. X-ray shows moderate joint space narrowing. Physical therapy referral provided.",
+    "vitalSigns": {
+      "bloodPressure": "138/84",
+      "heartRate": "72",
+      "temperature": "98.7",
+      "weight": "198"
+    }
+  },
+  {
+    "Id": 5,
+    "patientId": "5",
+    "doctorId": "5",
+    "visitDate": "2024-03-07T00:00:00.000Z",
+    "diagnosis": "Acne vulgaris - moderate",
+    "prescription": [
+      {
+        "medication": "Tretinoin cream",
+        "dosage": "0.025% apply at bedtime"
+      },
+      {
+        "medication": "Benzoyl peroxide gel",
+        "dosage": "5% apply twice daily"
+      }
+    ],
+    "notes": "Patient has inflammatory papules and pustules on face and upper back. Comedonal acne also present. Discussed proper skin care routine and sun protection.",
+    "vitalSigns": {
+      "bloodPressure": "108/68",
+      "heartRate": "70",
+      "temperature": "98.5",
+      "weight": "142"
+    }
+  },
+  {
+    "Id": 6,
+    "patientId": "6",
+    "doctorId": "6",
+    "visitDate": "2024-03-11T00:00:00.000Z",
+    "diagnosis": "Anxiety disorder - generalized",
+    "prescription": [
+      {
+        "medication": "Sertraline",
+        "dosage": "50mg once daily"
+      },
+      {
+        "medication": "Lorazepam",
+        "dosage": "0.5mg as needed for severe anxiety"
+      }
+    ],
+    "notes": "Patient reports persistent worry and anxiety affecting work performance. No panic attacks. GAD-7 score of 14. Counseling referral provided.",
+    "vitalSigns": {
+      "bloodPressure": "125/78",
+      "heartRate": "88",
+      "temperature": "98.3",
+      "weight": "170"
+    }
+  },
+  {
+    "Id": 7,
+    "patientId": "7",
+    "doctorId": "1",
+    "visitDate": "2024-03-13T00:00:00.000Z",
+    "diagnosis": "Atrial fibrillation - newly diagnosed",
+    "prescription": [
+      {
+        "medication": "Metoprolol",
+        "dosage": "50mg twice daily"
+      },
+      {
+        "medication": "Warfarin",
+        "dosage": "5mg daily with INR monitoring"
+      }
+    ],
+    "notes": "Patient presented with palpitations and irregular pulse. ECG confirms atrial fibrillation. CHA2DS2-VASc score of 3. Cardiology referral scheduled.",
+    "vitalSigns": {
+      "bloodPressure": "155/95",
+      "heartRate": "110",
+      "temperature": "98.8",
+      "weight": "158"
+    }
+  },
+  {
+    "Id": 8,
+    "patientId": "8",
+    "doctorId": "6",
+    "visitDate": "2024-03-09T00:00:00.000Z",
+    "diagnosis": "Type 2 diabetes mellitus - controlled",
+    "prescription": [
+      {
+        "medication": "Metformin",
+        "dosage": "1000mg twice daily"
+      },
+      {
+        "medication": "Glipizide",
+        "dosage": "5mg before meals"
+      }
+    ],
+    "notes": "Annual diabetes follow-up. HbA1c 6.8% - improved from last visit. Feet examination normal. Diabetic retinopathy screening due next month.",
+    "vitalSigns": {
+      "bloodPressure": "132/80",
+      "heartRate": "76",
+      "temperature": "98.6",
+      "weight": "205"
+    }
+  },
+  {
+    "Id": 9,
+    "patientId": "1",
+    "doctorId": "6",
+    "visitDate": "2024-02-28T00:00:00.000Z",
+    "diagnosis": "Annual physical examination - normal",
+    "prescription": [],
+    "notes": "Routine annual physical examination. All systems reviewed and found to be normal. Vaccinations up to date. Mammography and colonoscopy screening discussed.",
+    "vitalSigns": {
+      "bloodPressure": "142/88",
+      "heartRate": "74",
+      "temperature": "98.5",
+      "weight": "183"
+    }
+  },
+  {
+    "Id": 10,
+    "patientId": "3",
+    "doctorId": "2",
+    "visitDate": "2024-02-25T00:00:00.000Z",
+    "diagnosis": "Tension-type headache",
+    "prescription": [
+      {
+        "medication": "Ibuprofen",
+        "dosage": "400mg as needed"
+      }
+    ],
+    "notes": "Patient reports frequent headaches, usually bilateral and band-like. Stress-related triggers identified. Relaxation techniques and stress management discussed.",
+    "vitalSigns": {
+      "bloodPressure": "112/72",
+      "heartRate": "66",
+      "temperature": "98.4",
+      "weight": "129"
+    }
+  }
+]
